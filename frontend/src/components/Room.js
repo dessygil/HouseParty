@@ -5,6 +5,9 @@ import { useNavigate } from "react-router-dom";
 import CreateRoomPage from "./CreateRoomPage";
 import MusicPlayer from './MusicPlayer';
 
+
+
+
 export default function Room(props) {
 
     const [votesToSkip, setVotesToSkip] = useState(2);
@@ -141,5 +144,4 @@ export default function Room(props) {
     return (
         showSettings ? renderSettings() : renderRoomPage()
     );
-
 }
