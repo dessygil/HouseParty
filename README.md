@@ -13,3 +13,4 @@ A room sharing app to listen to music with people that have similar tastes
 7. Make sure you have a song playing in Spotify for this app to work
 
 ## What will be added
+-Spotipy to be used as the library to access spotify
