@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Button, Grid, Typography, TextField, FormHelperText, FormControl, FormControlLabel, RadioGroup, Radio, Collapse } from "@mui/material";
 import { withRouter } from './withRouter';
 import { Link } from 'react-router-dom';
@@ -88,7 +88,7 @@ function CreateRoomPage(props) {
         );
     };
 
-    const enderUpdateButtons = () => {
+    const renderUpdateButtons = () => {
         return (
             <Grid item xs={12} align="center">
                 <Button
@@ -153,7 +153,7 @@ function CreateRoomPage(props) {
                 <FormControl>
                     <TextField required={true} type="number"
                         onChange={handleVotesChange}
-                        defaultValue={state.votesToSkip}
+                        defaultValue={votesToSkip}
                         inputProps={{ min: 1, style: { textAlign: "center" }, }}
                     />
                     <FormHelperText component={"div"}>
@@ -348,4 +348,3 @@ class CreateRoomPage extends Component {
         );
     }
 } */
-
