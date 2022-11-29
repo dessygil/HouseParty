@@ -20,6 +20,54 @@ export default function Room(props) {
 
     const { roomCode } = useParams();
 
+    // new code for trying to play music from the browser
+    const [player, setPlayer] = useState(undefined);
+
+    useEffect(() => {
+        
+        window.onSpotifyWebPlaybackSDKReady = () => {
+            
+            const token = '[My access token]'; //TODO fetch for the access token
+            const player = new window.Spotify.Player({
+                name: 'Web Playback SDK Quick Start Player',
+                getOAuthToken: cb => { cb(token); },
+                volume: 0.5
+            });
+
+            setPlayer(player);
+
+            // Ready
+            player.addListener('ready', ({ device_id }) => {
+                console.log('Ready with Device ID', device_id);
+            });
+
+            // Not Ready
+            player.addListener('not_ready', ({ device_id }) => {
+                console.log('Device ID has gone offline', device_id);
+            });
+
+            player.addListener('initialization_error', ({ message }) => {
+                console.error(message);
+            });
+
+            player.addListener('authentication_error', ({ message }) => {
+                console.error(message);
+            });
+
+            player.addListener('account_error', ({ message }) => {
+                console.error(message);
+            });
+
+            document.getElementById('togglePlay').onclick = function () {
+                player.togglePlay();
+            };
+
+            player.connect();
+        }
+    });
+
+
+
     React.useEffect(() => {
 
         fetch(`/api/get-room?code=${roomCode}`)
@@ -56,7 +104,7 @@ export default function Room(props) {
                 return response.json();
             };
         }).then((data) => {
-            setSong({data});
+            setSong({ data });
         })
     }
 

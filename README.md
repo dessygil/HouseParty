@@ -13,9 +13,7 @@ A room sharing app to listen to music with people that have similar tastes
 7. Make sure you have a song playing in Spotify for this app to work
 
 ## What will be added
--change all components to functional 
--add background to the  site
--add flavicon
+-add flavicon (tried and struggled)
 -make actual music play from the app itself
 -Work with podcasts too
 -Spotipy to be used as the library to access spotify
