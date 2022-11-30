@@ -23,49 +23,55 @@ export default function Room(props) {
     // new code for trying to play music from the browser
     const [player, setPlayer] = useState(undefined);
 
-    useEffect(() => {
+    React.useEffect(() => {
         
+        if( Object.keys(song).length !== 0){
+            console.log("song is playing is changing", song);
+        }
+        
+        /*
+        const script = document.createElement("script");
+        script.src = "https://sdk.scdn.co/spotify-player.js";
+        script.async = true;
+
+        document.body.appendChild(script);
+
         window.onSpotifyWebPlaybackSDKReady = () => {
-            
-            const token = '[My access token]'; //TODO fetch for the access token
+
             const player = new window.Spotify.Player({
-                name: 'Web Playback SDK Quick Start Player',
-                getOAuthToken: cb => { cb(token); },
+                name: 'Web Playback SDK',
+                getOAuthToken: cb => { cb(props.token); }, //TODO need to find to get token
                 volume: 0.5
             });
 
             setPlayer(player);
 
-            // Ready
             player.addListener('ready', ({ device_id }) => {
                 console.log('Ready with Device ID', device_id);
             });
 
-            // Not Ready
             player.addListener('not_ready', ({ device_id }) => {
                 console.log('Device ID has gone offline', device_id);
             });
 
-            player.addListener('initialization_error', ({ message }) => {
-                console.error(message);
-            });
+            player.addListener('player_state_changed', (state => {
 
-            player.addListener('authentication_error', ({ message }) => {
-                console.error(message);
-            });
+                if (!state) {
+                    return;
+                }
 
-            player.addListener('account_error', ({ message }) => {
-                console.error(message);
-            });
+                setTrack(state.track_window.current_track);
+                setPaused(state.paused);
 
-            document.getElementById('togglePlay').onclick = function () {
-                player.togglePlay();
-            };
+                player.getCurrentState().then(state => {
+                    (!state) ? setActive(false) : setActive(true)
+                });
+
+            }));
 
             player.connect();
-        }
-    });
-
+        }; */
+    }, [song]);
 
 
     React.useEffect(() => {
@@ -93,6 +99,7 @@ export default function Room(props) {
         const interval = setInterval(() => {
             getCurrentSong();
         }, 1000);
+
         return () => clearInterval(interval);
     }, []);
 
